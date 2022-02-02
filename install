@@ -1,4 +1,6 @@
 #!/bin/bash
 
 stow nvim
+stow zsh
+stow bin
 

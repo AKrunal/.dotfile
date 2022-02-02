@@ -1,3 +1,5 @@
 #!/bin/bash
 
 stow -D nvim
+stow -D zsh
+stow -D bin
