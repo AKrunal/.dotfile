@@ -383,7 +383,7 @@ nnoremap <C-q> :wq<CR>==
 inoremap <C-q> <Esc>:wq<CR>==gi
 vnoremap <C-q> :wq<CR>gv=gv
 
-map <C-v> :r ~/.vimbuffer<CR>
+map <C-n> :r ~/.vimbuffer<CR>
 vmap <C-c> :w! ~/.vimbuffer \| !cat ~/.vimbuffer \| clip.exe <CR><CR>
 
 " "dict navigation
@@ -506,3 +506,6 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 nnoremap <leader>ga :lua require('telescope').extensions.git_worktree.create_git_worktree() <CR>
 nnoremap <leader>u :UndotreeShow<CR>
 map <leader>g :G <CR>
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+autocmd VimEnter * WipeReg
+

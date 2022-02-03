@@ -30,8 +30,8 @@ require("telescope").setup({
     },
 })
 
-require("telescope").load_extension("git_worktree")
 require("telescope").load_extension("fzy_native")
+require("telescope").load_extension("git_worktree")
 
 local M = {}
 M.search_dotfiles = function()
@@ -48,8 +48,8 @@ local function set_background(content)
             .. content
             .. "'\""
     )
-end
 
+end
 local function select_background(prompt_bufnr, map)
     local function set_the_background(close)
         local content = require("telescope.actions.state").get_selected_entry(
