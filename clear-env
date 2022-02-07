@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "clinig  nvim"
 stow -D nvim
+echo "clinig zsh"
 stow -D zsh
+echo "clinig bin"
 stow -D bin
+echo "clinig tmux"
+stow -D tmux

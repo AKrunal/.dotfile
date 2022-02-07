@@ -1,6 +1,11 @@
 #!/bin/bash
 
+echo "installing nvim"
 stow nvim
+echo "installing zsh"
 stow zsh
+echo "installing bin"
 stow bin
+echo "installing tmux"
+stow tmux
 

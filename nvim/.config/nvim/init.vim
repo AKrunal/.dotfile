@@ -2,9 +2,13 @@
 
 """ Vim-Plug
 call plug#begin()
+"some random plugin
+Plug 'tpope/vim-markdown'
+
 
 "git worktree
 Plug 'ThePrimeagen/git-worktree.nvim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'mbbill/undotree'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
@@ -509,3 +513,11 @@ map <leader>g :G <CR>
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 autocmd VimEnter * WipeReg
 
+:set shellcmdflag=-ic
+"autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%"))
+
+nmap <leader>ft :Filetypes <CR>
+" some markdown change
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+let g:markdown_syntax_conceal = 0
+let g:markdown_minlines = 50

@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+echo "Installing plugins"
+nvim -c ":PlugInstall" -c ":q" -c ":q"
+nvim -c ":GoInstallBinaries" -c ":q"

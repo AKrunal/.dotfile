@@ -125,3 +125,4 @@ bindkey '^H' backward-kill-word
 bindkey '5~' kill-word
 
 alias runser="tmux neww -n 'runserver' 'python3 manage.py runserver' "
+export PATH=$PATH:~/.local/bin/go/bin
