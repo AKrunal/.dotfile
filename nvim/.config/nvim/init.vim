@@ -3,18 +3,17 @@
 """ Vim-Plug
 call plug#begin()
 "some random plugin
-Plug 'tpope/vim-markdown'
 
+Plug 'mbbill/undotree'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'theprimeagen/vim-be-good'
+Plug 'https://github.com/ThePrimeagen/refactoring.nvim.git'
 
+Plug 'https://github.com/nvim-treesitter/nvim-treesitter.git'
 "git worktree
 Plug 'ThePrimeagen/git-worktree.nvim'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'mbbill/undotree'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
-Plug 'https://github.com/ThePrimeagen/refactoring.nvim.git'
-Plug 'https://github.com/nvim-treesitter/nvim-treesitter.git'
-Plug 'theprimeagen/vim-be-good'
 
 Plug 'https://github.com/preservim/nerdtree.git'
 
@@ -38,18 +37,12 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bryanmylee/vim-colorscheme-icons'
-"Plug 'mhinz/vim-startify'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/seoul256.vim'
-"Plug 'junegunn/vim-journal'
 Plug 'junegunn/rainbow_parentheses.vim'
-"Plug 'nightsense/forgotten'
 Plug 'zaki/zazen'
 Plug 'szw/vim-maximizer'
 
-" Aethetics - Additional
-"Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim' }
-"Plug 'rhysd/vim-color-spring-night'
 
 " Functionalities
 Plug 'tpope/vim-fugitive'
@@ -78,7 +71,6 @@ call plug#end()
 
 " Main Coloring Configurations
 syntax on
-color dracula
 "colorscheme gruvbox
 
 " Enable True Color Support (ensure you're using a 256-color enabled $TERM, e.g. xterm-256color)
@@ -115,8 +107,6 @@ let g:indentLine_char = '▏'
 let g:indentLine_defaultGroup = 'NonText'
 " Disable indentLine from concealing json and markdown syntax (e.g. ```)
 let g:vim_json_syntax_conceal = 0
-let g:vim_markdown_conceal = 0
-let g:vim_markdown_conceal_code_blocks = 0
 
 " TagBar
 let g:tagbar_width = 30
@@ -333,16 +323,13 @@ vnoremap <C-TAB> :tabnext<CR>gv=gv
 
 """ Custom Mappings
 let mapleader=" "
-nmap <leader>$s <C-w>s<C-w>j:terminal<CR>:set nonumber<CR><S-a>
-nmap <leader>$v <C-w>v<C-w>l:terminal<CR>:set nonumber<CR><S-a>
+nmap <leader>ts <C-w>s<C-w>j:terminal<CR>:set nonumber<CR><S-a>
 nmap <leader>w :TagbarToggle<CR>
 nmap \| <leader>w
 nmap <leader>ee :Colors<CR>
 nmap <leader>ea :AirlineTheme
 nmap <leader>e1 :call ColorDracula()<CR>
 nmap <leader>e2 :call ColorGruv()<CR>
-nmap <leader>e3 :call ColorForgotten()<CR>
-nmap <leader>e4 :call ColorZazen()<CR>
 nmap <leader>r :so ~/.config/nvim/init.vim<CR>
 nmap <leader>t :call TrimWhitespace()<CR>
 nmap <leader>p <Plug>(pydocstring)
@@ -416,13 +403,6 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-" Using Lua functions
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<cr>
-
 lua << EOF
 
 require('telescope').setup{
@@ -473,29 +453,14 @@ nnoremap <leader>gw <cmd> :lua require('telescope').extensions.git_worktree.git_
 nmap <C-_>   <Plug>NERDCommenterToggle
 vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
 
-" this will makie the directory
 
 noremap! <A-BS> <C-w>
 noremap! <A-h> <C-w>
 
 noremap! <C-BS> <C-w>
 noremap! <C-h> <C-w>
-"inoremap <C-w> <C-\><C-o>dB
-"inoremap <C-BS> <C-\><C-o>db
 
 :set nowrap
-
-
-nmap <leader>gg :G<CR>
-
-" empty register
-fun! EmptyRegisters()
-    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
-    for r in regs
-        call setreg(r, [])
-    endfor
-endfun
-
 nmap <leader>nn :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
@@ -510,14 +475,12 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 nnoremap <leader>ga :lua require('telescope').extensions.git_worktree.create_git_worktree() <CR>
 nnoremap <leader>u :UndotreeShow<CR>
 map <leader>g :G <CR>
+" wipe out the registers
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 autocmd VimEnter * WipeReg
 
+" implement the alias to run in command shell
 :set shellcmdflag=-ic
 "autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%"))
 
 nmap <leader>ft :Filetypes <CR>
-" some markdown change
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
-let g:markdown_syntax_conceal = 0
-let g:markdown_minlines = 50
