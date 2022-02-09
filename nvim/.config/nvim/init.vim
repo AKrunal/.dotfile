@@ -1,7 +1,7 @@
 """ Optixal's Neovim Init.vim
 
 """ Vim-Plug
-call plug#begin()
+call plug#begin()"{{{
 "some random plugin
 
 Plug 'mbbill/undotree'
@@ -67,7 +67,7 @@ Plug 'dkarter/bullets.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'antoinemadec/FixCursorHold.nvim'
 
-call plug#end()
+call plug#end()"}}}
 
 " Main Coloring Configurations
 syntax on
@@ -142,7 +142,7 @@ let g:limelight_conceal_guifg = 'gray'
 let g:startify_fortune_use_unicode = 1
 
 
-" coc.vim START
+" coc.vim START{{{
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -228,7 +228,7 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" coc.vim END
+" coc.vim END}}}
 
 " signify
 let g:signify_sign_add = '│'
@@ -277,7 +277,7 @@ function! ColorGruv()
     :colorscheme gruvbox
 endfunction
 
-""" Custom Mappings
+""" Custom Mappings"{{{
 
 let mapleader=" "
 nmap <leader>$s <C-w>s<C-w>j:terminal<CR>:set nonumber<CR><S-a>
@@ -372,7 +372,7 @@ vnoremap <C-s> :w<CR>gv=gv
 " save with quit system
 nnoremap <C-q> :wq<CR>==
 inoremap <C-q> <Esc>:wq<CR>==gi
-vnoremap <C-q> :wq<CR>gv=gv
+vnoremap <C-q> :wq<CR>gv=gv"}}}
 
 map <C-n> :r ~/.vimbuffer<CR>
 vmap <C-c> :w! ~/.vimbuffer \| !cat ~/.vimbuffer \| clip.exe <CR><CR>
@@ -484,3 +484,22 @@ autocmd VimEnter * WipeReg
 "autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%"))
 
 nmap <leader>ft :Filetypes <CR>
+
+"folding
+"{{{
+
+set foldenable
+set foldlevelstart=10
+set foldnestmax=11
+set foldmethod=marker
+setlocal foldignore=
+noremap <leader><leader> za
+noremap <leader>ff zf
+au Filetype htmldjango nmap <leader>ff zfit 
+
+autocmd BufWinLeave *.* :mkview
+autocmd BufWinEnter *.* silent! :loadview
+
+"}}}
+
+

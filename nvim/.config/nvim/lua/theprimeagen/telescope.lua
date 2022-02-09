@@ -30,14 +30,14 @@ require("telescope").setup({
     },
 })
 
-require("telescope").load_extension("fzy_native")
 require("telescope").load_extension("git_worktree")
+require("telescope").load_extension("fzy_native")
 
 local M = {}
 M.search_dotfiles = function()
     require("telescope.builtin").find_files({
         prompt_title = "< VimRC >",
-        cwd ="~/.config/nvim/",
+        cwd = vim.env.DOTFILES,
         hidden = true,
     })
 end
@@ -48,8 +48,8 @@ local function set_background(content)
             .. content
             .. "'\""
     )
-
 end
+
 local function select_background(prompt_bufnr, map)
     local function set_the_background(close)
         local content = require("telescope.actions.state").get_selected_entry(
