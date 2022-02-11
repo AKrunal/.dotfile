@@ -395,7 +395,9 @@ nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap J mzJ`z
-
+nnoremap G Gzz
+vnoremap > >gv
+vnoremap < <gv
 
 " Find files using Telescope command-line sugar.
 nnoremap  <leader>ff <cmd>Telescope find_files<cr>
@@ -491,7 +493,7 @@ nmap <leader>ft :Filetypes <CR>
 set foldenable
 set foldlevelstart=10
 set foldnestmax=11
-set foldmethod=marker
+set foldmethod=indent
 setlocal foldignore=
 noremap <leader><leader> za
 noremap <leader>ff zf
@@ -502,4 +504,82 @@ autocmd BufWinEnter *.* silent! :loadview
 
 "}}}
 
+nnoremap <silent><leader>n   :noh <CR>
+:call ColorDracula()
+let g:airline_mode_map = {
+  \ '__'     : '-',
+  \ 'c'      : 'C',
+  \ 'i'      : 'I',
+  \ 'ic'     : 'I',
+  \ 'ix'     : 'I',
+  \ 'n'      : 'N',
+  \ 'multi'  : 'M',
+  \ 'ni'     : 'N',
+  \ 'no'     : 'N',
+  \ 'R'      : 'R',
+  \ 'Rv'     : 'R',
+  \ 's'      : 'S',
+  \ 'S'      : 'S',
+  \ ''     : 'S',
+  \ 't'      : 'T',
+  \ 'v'      : 'V',
+  \ 'V'      : 'V',
+  \ ''     : 'V',
+  \ }
+
+
+let g:airline_filetype_overrides = {
+  \ 'coc-explorer':  [ 'CoC Explorer', '' ],
+  \ 'defx':  ['defx', '%{b:defx.paths[0]}'],
+  \ 'fugitive': ['fugitive', '%{airline#util#wrap(airline#extensions#branch#get_head(),80)}'],
+  \ 'floggraph':  [ 'Flog', '%{get(b:, "flog_status_summary", "")}' ],
+  \ 'gundo': [ 'Gundo', '' ],
+  \ 'help':  [ 'Help', '%f' ],
+  \ 'minibufexpl': [ 'MiniBufExplorer', '' ],
+  \ 'nerdtree': [ get(g:, 'NERDTreeStatusline', 'NERD'), '' ],
+  \ 'startify': [ 'startify', '' ],
+  \ 'vim-plug': [ 'Plugins', '' ],
+  \ 'vimfiler': [ 'vimfiler', '%{vimfiler#get_status_string()}' ],
+  \ 'vimshell': ['vimshell','%{vimshell#get_status_string()}'],
+  \ 'vaffle' : [ 'Vaffle', '%{b:vaffle.dir}' ],
+  \ }
+
+
+  if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+  endif
+
+  " unicode symbols
+  let g:airline_left_sep = '»'
+  let g:airline_left_sep = '▶'
+  let g:airline_right_sep = '«'
+  let g:airline_right_sep = '◀'
+  let g:airline_symbols.colnr = ' ㏇:'
+  let g:airline_symbols.colnr = ' ℅:'
+  let g:airline_symbols.crypt = '🔒'
+  let g:airline_symbols.linenr = '☰'
+  let g:airline_symbols.linenr = ' ␊:'
+  let g:airline_symbols.linenr = ' ␤:'
+  let g:airline_symbols.linenr = '¶'
+  let g:airline_symbols.maxlinenr = ''
+  let g:airline_symbols.maxlinenr = '㏑'
+  let g:airline_symbols.branch = '⎇'
+  let g:airline_symbols.paste = 'ρ'
+  let g:airline_symbols.paste = 'Þ'
+  let g:airline_symbols.paste = '∥'
+  let g:airline_symbols.spell = 'Ꞩ'
+  let g:airline_symbols.notexists = 'Ɇ'
+  let g:airline_symbols.whitespace = 'Ξ'
+
+   "powerline symbols
+  "let g:airline_left_sep = ''
+  "let g:airline_left_alt_sep = ''
+  "let g:airline_right_sep = ''
+  "let g:airline_right_alt_sep = ''
+  "let g:airline_symbols.branch = ''
+  "let g:airline_symbols.colnr = ' :'
+  "let g:airline_symbols.readonly = ''
+  "let g:airline_symbols.linenr = ' :'
+  "let g:airline_symbols.maxlinenr = '☰ '
+  "let g:airline_symbols.dirty='⚡'
 
