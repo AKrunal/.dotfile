@@ -113,8 +113,6 @@ source $ZSH/oh-my-zsh.sh
 alias dis='cd /mnt/c/Users/ASUS/OneDrive/Desktop'
 alias conf='cd ~/.config/nvim'
 alias nvim=~/nvim.appimage
-alias vi=nvim
-alias vim=nvim
 alias nv=nvim
 alias cls=clear
 export EDITOR=nvim
@@ -126,3 +124,4 @@ bindkey '5~' kill-word
 
 alias runser="tmux neww -n 'runserver' 'python3 manage.py runserver' "
 export PATH=$PATH:~/.local/bin/go/bin
+alias calc='~/./Desktop/Computers-plugin/calc.exe'

@@ -6,28 +6,70 @@ local conf = require("telescope.config").values
 local actions = require("telescope.actions")
 
 require("telescope").setup({
-    defaults = {
-        file_sorter = require("telescope.sorters").get_fzy_sorter,
-        prompt_prefix = " >",
-        color_devicons = true,
-
-        file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-        grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-        qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-
-        mappings = {
-            i = {
-                ["<C-x>"] = false,
-                ["<C-q>"] = actions.send_to_qflist,
+        defaults = {
+            vimgrep_arguments = {
+                "rg",
+                "--color=never",
+                "--no-heading",
+                "--line-number",
+                "--smart-case",
+                "--with-filename",
             },
+            selection_caret = "  ",
+            entry_prefix = "  ",
+            initial_mode = "insert",
+            selection_strategy = "reset",
+            sorting_strategy = "ascending",
+            layout_strategy = "horizontal",
+            layout_config = {
+                horizontal = {
+                    prompt_position = "top",
+                    preview_width = 0.55,
+                    results_width = 0.8,
+                },
+                vertical = {
+                    mirror = false,
+                },
+                width = 0.87,
+                height = 0.80,
+                preview_cutoff = 120,
+            },
+            file_sorter = require("telescope.sorters").get_fuzzy_file,
+            file_ignore_patterns = { "node_modules" },
+            generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+            path_display = { "truncate" },
+            winblend = 0,
+            border = {},
+            borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+            color_devicons = true,
+            use_less = true,
+            set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+            file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+            grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+            qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+            -- Developer configurations: Not meant for general override
+            buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+    file_sorter = require("telescope.sorters").get_fzy_sorter,
+    prompt_prefix = " ",
+    color_devicons = true,
+
+    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+
+    mappings = {
+        i = {
+            ["<C-x>"] = false,
+            ["<C-q>"] = actions.send_to_qflist,
         },
     },
-    extensions = {
-        fzy_native = {
-            override_generic_sorter = false,
-            override_file_sorter = true,
-        },
+},
+extensions = {
+    fzy_native = {
+        override_generic_sorter = false,
+        override_file_sorter = true,
     },
+},
 })
 
 require("telescope").load_extension("git_worktree")
@@ -36,25 +78,25 @@ require("telescope").load_extension("fzy_native")
 local M = {}
 M.search_dotfiles = function()
     require("telescope.builtin").find_files({
-        prompt_title = "< VimRC >",
-        cwd = "~/.config/nvim/",
-        hidden = true,
-    })
+            prompt_title = "< VimRC >",
+            cwd = "~/.config/nvim/",
+            hidden = true,
+        })
 end
 
 local function set_background(content)
     vim.fn.system(
         "dconf write /org/mate/desktop/background/picture-filename \"'"
-            .. content
-            .. "'\""
-    )
+        .. content
+        .. "'\""
+        )
 end
 
 local function select_background(prompt_bufnr, map)
     local function set_the_background(close)
         local content = require("telescope.actions.state").get_selected_entry(
             prompt_bufnr
-        )
+            )
         set_background(content.cwd .. "/" .. content.value)
         if close then
             require("telescope.actions").close(prompt_bufnr)
@@ -73,17 +115,17 @@ end
 local function image_selector(prompt, cwd)
     return function()
         require("telescope.builtin").find_files({
-            prompt_title = prompt,
-            cwd = cwd,
+                prompt_title = prompt,
+                cwd = cwd,
 
-            attach_mappings = function(prompt_bufnr, map)
-                select_background(prompt_bufnr, map)
+                attach_mappings = function(prompt_bufnr, map)
+                    select_background(prompt_bufnr, map)
 
-                -- Please continue mapping (attaching additional key maps):
-                -- Ctrl+n/p to move up and down the list.
-                return true
-            end,
-        })
+                    -- Please continue mapping (attaching additional key maps):
+                    -- Ctrl+n/p to move up and down the list.
+                    return true
+                end,
+            })
     end
 end
 
@@ -92,34 +134,34 @@ M.anime_selector = image_selector("< Anime Bobs > ", "~/personal/anime")
 local function refactor(prompt_bufnr)
     local content = require("telescope.actions.state").get_selected_entry(
         prompt_bufnr
-    )
+        )
     require("telescope.actions").close(prompt_bufnr)
     require("refactoring").refactor(content.value)
 end
 
 M.refactors = function()
     require("telescope.pickers").new({}, {
-        prompt_title = "refactors",
-        finder = require("telescope.finders").new_table({
-            results = require("refactoring").get_refactors(),
-        }),
-        sorter = require("telescope.config").values.generic_sorter({}),
-        attach_mappings = function(_, map)
-            map("i", "<CR>", refactor)
-            map("n", "<CR>", refactor)
-            return true
-        end,
-    }):find()
+            prompt_title = "refactors",
+            finder = require("telescope.finders").new_table({
+                    results = require("refactoring").get_refactors(),
+                }),
+            sorter = require("telescope.config").values.generic_sorter({}),
+            attach_mappings = function(_, map)
+                map("i", "<CR>", refactor)
+                map("n", "<CR>", refactor)
+                return true
+            end,
+        }):find()
 end
 
 M.git_branches = function()
     require("telescope.builtin").git_branches({
-        attach_mappings = function(_, map)
-            map("i", "<c-d>", actions.git_delete_branch)
-            map("n", "<c-d>", actions.git_delete_branch)
-            return true
-        end,
-    })
+            attach_mappings = function(_, map)
+                map("i", "<c-d>", actions.git_delete_branch)
+                map("n", "<c-d>", actions.git_delete_branch)
+                return true
+            end,
+        })
 end
 
 M.dev = function(opts)
@@ -131,7 +173,7 @@ M.dev = function(opts)
     local possible_files = vim.api.nvim_get_runtime_file(
         "/lua/**/dev.lua",
         true
-    )
+        )
     local local_files = {}
     for _, raw_f in ipairs(possible_files) do
         local real_f = vim.loop.fs_realpath(raw_f)
@@ -156,9 +198,9 @@ M.dev = function(opts)
     for k, v in pairs(mod) do
         local debug_info = debug.getinfo(v)
         table.insert(objs, {
-            filename = string.sub(debug_info.source, 2),
-            text = k,
-        })
+                filename = string.sub(debug_info.source, 2),
+                text = k,
+            })
     end
 
     local mod_name = vim.split(dev, "/lua/")
@@ -172,55 +214,57 @@ M.dev = function(opts)
     mod_name = string.gsub(mod_name, "/", ".")
 
     pickers.new({
-        finder = finders.new_table({
-            results = objs,
-            entry_maker = function(entry)
-                return {
-                    value = entry,
-                    text = entry.text,
-                    display = entry.text,
-                    ordinal = entry.text,
-                    filename = entry.filename,
-                }
-            end,
-        }),
-        sorter = conf.generic_sorter(opts),
-        previewer = previewers.builtin.new(opts),
-        attach_mappings = function(_, map)
-            actions.select_default:replace(function(...)
-                -- print("SELECTED", vim.inspect(action_state.get_selected_entry()))
-                local entry = action_state.get_selected_entry()
-                actions.close(...)
+            finder = finders.new_table({
+                    results = objs,
+                    entry_maker = function(entry)
+                        return {
+                            value = entry,
+                            text = entry.text,
+                            display = entry.text,
+                            ordinal = entry.text,
+                            filename = entry.filename,
+                        }
+                    end,
+                }),
+            sorter = conf.generic_sorter(opts),
+            previewer = previewers.builtin.new(opts),
+            attach_mappings = function(_, map)
+                actions.select_default:replace(function(...)
+                    -- print("SELECTED", vim.inspect(action_state.get_selected_entry()))
+                    local entry = action_state.get_selected_entry()
+                    actions.close(...)
 
-                mod[entry.value.text]()
-            end)
-
-            map("i", "<tab>", function(...)
-                local entry = action_state.get_selected_entry()
-                actions.close(...)
-
-                vim.schedule(function()
-                    -- vim.cmd(string.format([[normal!]], entry.value.text))
-                    vim.api.nvim_feedkeys(
-                        vim.api.nvim_replace_termcodes(
-                            string.format(
-                                "<esc>:lua require('%s').%s()",
-                                mod_name,
-                                entry.value.text
-                            ),
-                            true,
-                            false,
-                            true
-                        ),
-                        "n",
-                        true
-                    )
+                    mod[entry.value.text]()
                 end)
-            end)
 
-            return true
-        end,
-    }):find()
-end
+                map("i", "<tab>", function(...)
+                    local entry = action_state.get_selected_entry()
+                    actions.close(...)
 
-return M
+                    vim.schedule(function()
+                        -- vim.cmd(string.format([[normal!]], entry.value.text))
+                        vim.api.nvim_feedkeys(
+                            vim.api.nvim_replace_termcodes(
+                                string.format(
+                                    "<esc>:lua require('%s').%s()",
+                                    mod_name,
+                                    entry.value.text
+                                    ),
+                                true,
+                                false,
+                                true
+                                ),
+                            "n",
+                            true
+                            )
+                        end)
+                    end)
+
+                    return true
+                end,
+            }):find()
+    end
+
+    return M
+
+

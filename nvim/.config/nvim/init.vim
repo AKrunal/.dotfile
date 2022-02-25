@@ -3,8 +3,9 @@
 """ Vim-Plug
 call plug#begin()"{{{
 "some random plugin
-
+Plug 'sbdchd/neoformat'
 Plug 'mbbill/undotree'
+Plug 'https://github.com/luisiacc/gruvbox-baby.git'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'theprimeagen/vim-be-good'
 Plug 'https://github.com/ThePrimeagen/refactoring.nvim.git'
@@ -274,7 +275,8 @@ endfunction
 
 " Seoul256 Mode (Dark & Light)
 function! ColorGruv()
-    :colorscheme gruvbox
+    :colorscheme gruvbox-baby
+    :AirlineTheme google_dark
 endfunction
 
 """ Custom Mappings"{{{
@@ -310,7 +312,6 @@ nmap <silent> <leader><leader> :noh<CR>
 
 
 autocmd FileType apache setlocal commentstring=#\ %s
-
 inoremap <C-t> <Esc>:tabnew<CR>==gi
 nnoremap <C-t> :tabnew<CR>==
 vnoremap <C-t> :tabnew<CR>gv=gv
@@ -336,7 +337,7 @@ nmap <leader>p <Plug>(pydocstring)
 xmap <leader>a gaip*
 nmap <leader>a gaip*
 nmap <leader>s :Rg<CR>
-nmap <leader>d  <cmd>lua require('telescope.builtin').find_files()<CR>
+nmap <C-p>  <cmd>lua require('telescope.builtin').find_files()<CR>
 nmap <leader>f :BLines<CR>
 nmap <leader>j :set filetype=journal<CR>
 nmap <leader>k :ColorToggle<CR>
@@ -404,49 +405,6 @@ nnoremap  <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-lua << EOF
-
-require('telescope').setup{
-  defaults = {
-      file_sorter = require('telescope.sorters').get_fzy_sorter,
-      prompt_prefix = '>',
-      color_devicons = true,
-
-      file_previewer = require('telescope.previewers').vim_buffer_cat.new,
-      grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
-      qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
-
-    mappings = {
-      i = {
-        -- map actions.which_key to <C-h> (default: <C-/>)
-        -- actions.which_key shows the mappings for your picker,
-        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-        ["<C-h>"] = "which_key"
-      }
-    }
-  },
-  pickers = {
-    -- Default configuration for builtin pickers goes here:
-    -- picker_name = {
-    --   picker_config_key = value,
-    --   ...
-    -- }
-    -- Now the picker_config_key will be applied every time you call this
-    -- builtin picker
-  },
-  extensions = {
-    fzy_native = {
-        override_generic_sorter = false,
-        override_file_sorter = true,
-    }
-    -- please take a look at the readme of the extension you want to configure
-  }
-}
-require('telescope').load_extension('fzy_native')
-require("telescope").load_extension("git_worktree")
-EOF
-
 
 " git worktree
 nnoremap <leader>gw <cmd> :lua require('telescope').extensions.git_worktree.git_worktrees() <CR>
@@ -549,37 +507,5 @@ let g:airline_filetype_overrides = {
     let g:airline_symbols = {}
   endif
 
-  " unicode symbols
-  let g:airline_left_sep = '»'
-  let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '«'
-  let g:airline_right_sep = '◀'
-  let g:airline_symbols.colnr = ' ㏇:'
-  let g:airline_symbols.colnr = ' ℅:'
-  let g:airline_symbols.crypt = '🔒'
-  let g:airline_symbols.linenr = '☰'
-  let g:airline_symbols.linenr = ' ␊:'
-  let g:airline_symbols.linenr = ' ␤:'
-  let g:airline_symbols.linenr = '¶'
-  let g:airline_symbols.maxlinenr = ''
-  let g:airline_symbols.maxlinenr = '㏑'
-  let g:airline_symbols.branch = '⎇'
-  let g:airline_symbols.paste = 'ρ'
-  let g:airline_symbols.paste = 'Þ'
-  let g:airline_symbols.paste = '∥'
-  let g:airline_symbols.spell = 'Ꞩ'
-  let g:airline_symbols.notexists = 'Ɇ'
-  let g:airline_symbols.whitespace = 'Ξ'
-
-   "powerline symbols
-  "let g:airline_left_sep = ''
-  "let g:airline_left_alt_sep = ''
-  "let g:airline_right_sep = ''
-  "let g:airline_right_alt_sep = ''
-  "let g:airline_symbols.branch = ''
-  "let g:airline_symbols.colnr = ' :'
-  "let g:airline_symbols.readonly = ''
-  "let g:airline_symbols.linenr = ' :'
-  "let g:airline_symbols.maxlinenr = '☰ '
-  "let g:airline_symbols.dirty='⚡'
-
+" run selected python code in terminal
+vmap <leader><CR> :'<,'>w !python3  <CR>
