@@ -119,6 +119,7 @@ export EDITOR=nvim
 alias md=mkdir
 alias python=python3.10
 alias size=ncdu
+alias typing='python3 ~/.dotfile/Typing-Speed/training/runer.py'
 
 bindkey '^H' backward-kill-word
 bindkey '5~' kill-word
