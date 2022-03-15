@@ -1,0 +1,53 @@
+snippet boiler
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>${1}</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+	${2}
+  </body>
+</html>
+${0}
+endsnippet
+
+snippet html "boiler"
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>${1}</title>
+	<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+	${2}
+  </body>
+</html>
+${0}
+
+endsnippet
+
+snippet tag. "tag with class"
+<${1:div} class="${2}">
+	
+	${3}
+
+</${1}>
+${0}
+endsnippet
+
+snippet tag# "tag with id" 
+<${1:div} id="${2}">
+
+	${3}
+
+</${1}>
+${0}
+endsnippet

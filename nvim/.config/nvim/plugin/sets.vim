@@ -1,4 +1,8 @@
+set cursorline
+set cursorcolumn
+
 set nowrap
+set termguicolors
 set nohlsearch
 set relativenumber
 set nohlsearch
@@ -40,7 +44,7 @@ filetype plugin indent on
 set backspace=indent,eol,start
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab autoindent
 set incsearch ignorecase smartcase hlsearch
-set wildmode=longest,list,full wildmenu
+"set wildmode=longest,list,full wildmenu
 set ruler laststatus=2 showcmd showmode
 set list listchars=trail:»,tab:»-
 set backspace=indent,eol,start
@@ -54,7 +58,7 @@ set title
 
 set path+=**
 
-set wildmode=longest,list,full
+set wildmode=longest,full,full
 set wildmenu
 " Ignore files
 set wildignore+=*.pyc
@@ -64,4 +68,3 @@ set wildignore+=**/node_modules/*
 set wildignore+=**/android/*
 set wildignore+=**/ios/*
 set wildignore+=**/.git/*
-

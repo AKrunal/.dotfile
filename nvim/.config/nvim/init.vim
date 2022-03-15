@@ -1,5 +1,6 @@
 """ Optixal's Neovim Init.vim
 
+
 """ Vim-Plug
 call plug#begin()"{{{
 "some random plugin
@@ -16,7 +17,6 @@ Plug 'ThePrimeagen/git-worktree.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
 
-Plug 'https://github.com/preservim/nerdtree.git'
 
 Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
 Plug 'nvim-lua/plenary.nvim' " don't forget to add this one if you don't have it yet!
@@ -34,14 +34,11 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'https://github.com/nvim-telescope/telescope-fzy-native.nvim.git'
 
 " Aesthetics - Main
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bryanmylee/vim-colorscheme-icons'
 Plug 'junegunn/limelight.vim'
-Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'zaki/zazen'
 Plug 'szw/vim-maximizer'
 
 
@@ -67,6 +64,7 @@ Plug 'metakirby5/codi.vim'
 Plug 'dkarter/bullets.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'antoinemadec/FixCursorHold.nvim'
+
 
 call plug#end()"}}}
 
@@ -267,32 +265,26 @@ function! TrimWhitespace()
     call winrestview(l:save)
 endfunction
 
-" Dracula Mode (Dark)
-function! ColorDracula()
-    let g:airline_theme='dracula'
-    color dracula
-endfunction
 
-" Seoul256 Mode (Dark & Light)
 function! ColorGruv()
     :colorscheme gruvbox-baby
-    :AirlineTheme google_dark
+    let g:airline_theme='base16_gruvbox_dark_medium'
+
+    "let g:airline_theme='base16_black_metal_gorgoroth'
 endfunction
 
 """ Custom Mappings"{{{
 
 let mapleader=" "
 nmap <leader>$s <C-w>s<C-w>j:terminal<CR>:set nonumber<CR><S-a>
-nmap <leader>q :NERDTreeToggle<CR>
-nmap \\ <leader>q
+nmap <leader>q :Ex<CR>
+nmap <leader>vq :Vex<CR>
 nmap <leader>$v <C-w>v<C-w>l:terminal<CR>:set nonumber<CR><S-a>
 nmap \\ <leader>q
 nmap <leader>w :TagbarToggle<CR>
 nmap \| <leader>w
 nmap <leader>ee :Colors<CR>
 nmap <leader>ea :AirlineTheme
-nmap <leader>e1 :call ColorDracula()<CR>
-nmap <leader>e2 :call ColorGruv()<CR>
 nmap <leader>r :so ~/.config/nvim/init.vim<CR>
 nmap <leader>t :call TrimWhitespace()<CR>
 nmap <leader>p <Plug>(pydocstring)
@@ -312,15 +304,9 @@ nmap <silent> <leader><leader> :noh<CR>
 
 
 autocmd FileType apache setlocal commentstring=#\ %s
-inoremap <C-t> <Esc>:tabnew<CR>==gi
-nnoremap <C-t> :tabnew<CR>==
-vnoremap <C-t> :tabnew<CR>gv=gv
 
 let g:gitgutter_max_signs = 500
 
-inoremap <C-TAB> <Esc>:tabnext<CR>==gi
-nnoremap <C-TAB> :tabnext<CR>==
-vnoremap <C-TAB> :tabnext<CR>gv=gv
 
 """ Custom Mappings
 let mapleader=" "
@@ -329,8 +315,6 @@ nmap <leader>w :TagbarToggle<CR>
 nmap \| <leader>w
 nmap <leader>ee :Colors<CR>
 nmap <leader>ea :AirlineTheme
-nmap <leader>e1 :call ColorDracula()<CR>
-nmap <leader>e2 :call ColorGruv()<CR>
 nmap <leader>r :so ~/.config/nvim/init.vim<CR>
 nmap <leader>t :call TrimWhitespace()<CR>
 nmap <leader>p <Plug>(pydocstring)
@@ -347,8 +331,6 @@ nnoremap <leader>h :h <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
 autocmd FileType python nmap <leader>x :0,$!~/.config/nvim/env/bin/python -m yapf<CR>
 nmap <silent> <leader><leader> :noh<CR>
-nmap <Tab> :bnext<CR>
-nmap <S-Tab> :bprevious<CR>
 
 nnoremap <A-j> :m+<CR>==
 nnoremap <A-k> :m-2<CR>==
@@ -463,7 +445,7 @@ autocmd BufWinEnter *.* silent! :loadview
 "}}}
 
 nnoremap <silent><leader>n   :noh <CR>
-:call ColorDracula()
+:call ColorGruv()
 let g:airline_mode_map = {
   \ '__'     : '-',
   \ 'c'      : 'C',
@@ -509,3 +491,4 @@ let g:airline_filetype_overrides = {
 
 " run selected python code in terminal
 vmap <leader><CR> :'<,'>w !python3  <CR>
+

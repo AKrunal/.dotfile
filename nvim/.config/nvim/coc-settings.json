@@ -1,7 +1,8 @@
 {
-   "diagnostic.errorSign": "✘",
+    "diagnostic.errorSign": "✘",
     "diagnostic.warningSign": "",
     "diagnostic.infoSign": "",
+    "snippets.userSnippetsDirectory": "~/.dotfile/nvim/.config/nvim/snippits",
     "diagnostic.hintSign": "•",
     "coc.preferences.formatOnSaveFiletypes": [
         "javascript",
@@ -45,4 +46,4 @@
         "default": "\uf29c"
     }
 }
- 
+
