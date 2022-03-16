@@ -1,5 +1,6 @@
 """ Optixal's Neovim Init.vim
-
+set exrc
+set secure
 
 """ Vim-Plug
 call plug#begin()"{{{
@@ -291,11 +292,9 @@ nmap <leader>p <Plug>(pydocstring)
 xmap <leader>a gaip*
 nmap <leader>a gaip*
 nmap <leader>s :Rg<CR>
+nmap <leader>sn :CocCommand snippets.editSnippets<CR>
 nmap <leader>d  <cmd>lua require('telescope.builtin').find_files()<CR>
-nmap <leader>f :BLines<CR>
 nmap <leader>h :RainbowParentheses!!<CR>
-nmap <leader>j :set filetype=journal<CR>
-nmap <leader>k :ColorToggle<CR>
 nmap <leader>l :Limelight!!<CR>
 xmap <leader>l :Limelight!!<CR>
 autocmd FileType python nmap <leader>x :0,$!~/.config/nvim/env/bin/python -m yapf<CR>
@@ -322,11 +321,6 @@ xmap <leader>a gaip*
 nmap <leader>a gaip*
 nmap <leader>s :Rg<CR>
 nmap <C-p>  <cmd>lua require('telescope.builtin').find_files()<CR>
-nmap <leader>f :BLines<CR>
-nmap <leader>j :set filetype=journal<CR>
-nmap <leader>k :ColorToggle<CR>
-nmap <leader>l :Limelight!!<CR>
-xmap <leader>l :Limelight!!<CR>
 nnoremap <leader>h :h <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
 autocmd FileType python nmap <leader>x :0,$!~/.config/nvim/env/bin/python -m yapf<CR>
@@ -357,7 +351,7 @@ nnoremap <C-q> :wq<CR>==
 inoremap <C-q> <Esc>:wq<CR>==gi
 vnoremap <C-q> :wq<CR>gv=gv"}}}
 
-map <C-n> :r ~/.vimbuffer<CR>
+map <A-n> :r ~/.vimbuffer<CR>
 vmap <C-c> :w! ~/.vimbuffer \| !cat ~/.vimbuffer \| clip.exe <CR><CR>
 
 " "dict navigation
@@ -382,11 +376,6 @@ nnoremap G Gzz
 vnoremap > >gv
 vnoremap < <gv
 
-" Find files using Telescope command-line sugar.
-nnoremap  <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " git worktree
 nnoremap <leader>gw <cmd> :lua require('telescope').extensions.git_worktree.git_worktrees() <CR>
@@ -409,10 +398,6 @@ nmap <leader>nn :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '>
 
 com! W w
 
-" NERDTree
-let NERDTreeShowHidden=1
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-" Exit Vim if NERDTree is the only window left.
 
 nnoremap <leader>ga :lua require('telescope').extensions.git_worktree.create_git_worktree() <CR>
 nnoremap <leader>u :UndotreeShow<CR>
@@ -425,7 +410,6 @@ autocmd VimEnter * WipeReg
 :set shellcmdflag=-ic
 "autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%"))
 
-nmap <leader>ft :Filetypes <CR>
 
 "folding
 "{{{
@@ -489,6 +473,27 @@ let g:airline_filetype_overrides = {
     let g:airline_symbols = {}
   endif
 
+
 " run selected python code in terminal
 vmap <leader><CR> :'<,'>w !python3  <CR>
+
+"snippets setting
+imap <C-l> <Plug>(coc-snippets-expand)
+vmap <C-j> <Plug>(coc-snippets-select)
+let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_prev = '<c-k>'
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
 

@@ -120,6 +120,8 @@ alias md=mkdir
 alias python=python3.10
 alias size=ncdu
 alias usb='sudo mount -t drvfs F: /mnt/f || sudo mount -t drvfs G: /mnt/g'
+alias init='zsh ~/.dotfile/bin/.local/bin/project-starter.sh'
+alias src='source ~/.zshrc'
 
 bindkey '^H' backward-kill-word
 bindkey '5~' kill-word
