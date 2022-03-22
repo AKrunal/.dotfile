@@ -8,10 +8,6 @@ else
   let curl_exists=expand('curl')
 endif
 
-let g:vim_bootstrap_langs = "c"
-let g:vim_bootstrap_editor = "nvim"				" nvim or vim
-let g:vim_bootstrap_theme = "gruvbox"
-
 if !filereadable(vimplug_exists)
   if !executable(curl_exists)
     echoerr "You have to install curl or first install vim-plug yourself!"
@@ -26,9 +22,13 @@ if !filereadable(vimplug_exists)
 endif
 
 " Required:
-call plug#begin(expand('~/.cotfile/nvim/.config/nvim/local_init/python'))
+call plug#begin(expand('~/.cotfile/nvim/.config/nvim/local_init/go'))
 
-"here the come plugin
+Plug 'fatih/vim-go'
 
 call plug#end()
+
+let mapleader = ","
+nmap <leader>r :GoRun <CR>
+
 

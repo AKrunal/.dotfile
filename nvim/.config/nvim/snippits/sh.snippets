@@ -24,17 +24,75 @@
 #
 # Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
 
-snippet shibang "shibang" b
-#!/usr/bin/env bash
-endsnippet
 
 *****************************************
 *             logical thig              *
 *****************************************
 
 snippet if "if" b
-if [[ ${1:$var} ]]; then 
+if [[ ${1:$var} ]]; then
 	${2}
 fi
 ${0}
+endsnippet
+
+*copy
+# Shebang. Executing bash via /usr/bin/env makes scripts more portable.
+snippet #!
+#!/usr/bin/env sh
+endsnippet
+
+snippet s#!
+#!/usr/bin/env sh
+set -eu
+endsnippet
+
+snippet safe
+set -eu
+endsnippet
+
+snippet bash
+#!/usr/bin/env bash
+endsnippet
+
+snippet sbash
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+endsnippet
+
+snippet if
+if [[ ${1:condition} ]]; then
+	${0:${VISUAL}}
+fi
+endsnippet
+snippet elif
+elif [[ ${1:condition} ]]; then
+	${0:${VISUAL}}
+endsnippet
+snippet for
+for (( ${2:i} = 0; $2 < ${1:count}; $2++ )); do
+	${0:${VISUAL}}
+endsnippet
+	done
+snippet fori
+for ${1:needle} in ${2:haystack} ; do
+	${0:${VISUAL}}
+done
+endsnippet
+snippet wh
+while [[ ${1:condition} ]]; do
+	${0:${VISUAL}}
+done
+endsnippet
+snippet until
+until [[ ${1:condition} ]]; do
+	${0:${VISUAL}}
+done
+endsnippet
+snippet case
+case ${1:word} in
+	${2:pattern})
+		${0};;
+esac
 endsnippet

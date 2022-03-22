@@ -3,54 +3,59 @@ set exrc
 set secure
 
 """ Vim-Plug
-call plug#begin()"{{{
 "some random plugin
-Plug 'sbdchd/neoformat'
+"{{{
+call plug#begin()
+" basic
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-sensible'
 Plug 'mbbill/undotree'
-Plug 'https://github.com/luisiacc/gruvbox-baby.git'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'theprimeagen/vim-be-good'
-Plug 'https://github.com/ThePrimeagen/refactoring.nvim.git'
-
-Plug 'https://github.com/nvim-treesitter/nvim-treesitter.git'
-"git worktree
-Plug 'ThePrimeagen/git-worktree.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lua/popup.nvim'
-
-
-Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
-Plug 'nvim-lua/plenary.nvim' " don't forget to add this one if you don't have it yet!
-Plug 'ThePrimeagen/harpoon'
-Plug 'https://github.com/morhetz/gruvbox.git'
-
-Plug 'https://github.com/tpope/vim-fugitive.git'
-Plug 'https://github.com/airblade/vim-gitgutter.git'
 Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gcg
 
-" telescopes plugin
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'https://github.com/nvim-telescope/telescope-fzy-native.nvim.git'
 
-" Aesthetics - Main
+"pluging for being auto complete or somthing that make syntax higliting bettwer
+Plug 'sbdchd/neoformat'
+Plug 'https://github.com/github/copilot.vim.git'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+"color scheme
+Plug 'https://github.com/morhetz/gruvbox.git'
+Plug 'https://github.com/luisiacc/gruvbox-baby.git'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bryanmylee/vim-colorscheme-icons'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
+
+
+"the_primeagen
+Plug 'https://github.com/ThePrimeagen/refactoring.nvim.git'
+Plug 'https://github.com/nvim-treesitter/nvim-treesitter.git'
+Plug 'ThePrimeagen/git-worktree.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'ThePrimeagen/harpoon'
+
+
+Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
+
+" github
+Plug 'https://github.com/airblade/vim-gitgutter.git'
+Plug 'tpope/vim-fugitive'
+
+
+" telescopes plugin
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'https://github.com/nvim-telescope/telescope-fzy-native.nvim.git'
+
+" Aesthetics - Main
 Plug 'szw/vim-maximizer'
 
 
 " Functionalities
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdcommenter'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mhinz/vim-signify'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
@@ -60,14 +65,12 @@ Plug 'Yggdroot/indentLine' " no fuckign idea what the hell is going hear
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
-Plug 'metakirby5/codi.vim'
 Plug 'dkarter/bullets.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'antoinemadec/FixCursorHold.nvim'
 
-
-call plug#end()"}}}
+call plug#end()
+"}}}
 
 " Main Coloring Configurations
 syntax on
@@ -92,15 +95,9 @@ let g:airline_section_warning = ''
 autocmd BufWinEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
 
-" vim-pydocstring
-let g:pydocstring_doq_path = '~/.config/nvim/env/bin/doq'
 
 " Supertab
 let g:SuperTabDefaultCompletionType = "<C-n>"
-
-" EasyAlign
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
 
 " indentLine
 let g:indentLine_char = '▏'
@@ -253,9 +250,6 @@ autocmd FileType htmldjango inoremap {{ {{  }}<left><left><left>
 autocmd FileType htmldjango inoremap {% {%  %}<left><left><left>
 autocmd FileType htmldjango inoremap {# {#  #}<left><left><left>
 
-" Markdown and Journal
-autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType journal setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 """ Custom Functions
 
@@ -269,14 +263,12 @@ endfunction
 
 function! ColorGruv()
     :colorscheme gruvbox-baby
-    let g:airline_theme='base16_gruvbox_dark_medium'
 
-    "let g:airline_theme='base16_black_metal_gorgoroth'
+    let g:airline_theme='base16_black_metal_gorgoroth'
 endfunction
 
 """ Custom Mappings"{{{
 
-let mapleader=" "
 nmap <leader>$s <C-w>s<C-w>j:terminal<CR>:set nonumber<CR><S-a>
 nmap <leader>q :Ex<CR>
 nmap <leader>vq :Vex<CR>
@@ -286,14 +278,9 @@ nmap <leader>w :TagbarToggle<CR>
 nmap \| <leader>w
 nmap <leader>ee :Colors<CR>
 nmap <leader>ea :AirlineTheme
-nmap <leader>r :so ~/.config/nvim/init.vim<CR>
 nmap <leader>t :call TrimWhitespace()<CR>
-nmap <leader>p <Plug>(pydocstring)
-xmap <leader>a gaip*
-nmap <leader>a gaip*
 nmap <leader>s :Rg<CR>
 nmap <leader>sn :CocCommand snippets.editSnippets<CR>
-nmap <leader>d  <cmd>lua require('telescope.builtin').find_files()<CR>
 nmap <leader>h :RainbowParentheses!!<CR>
 nmap <leader>l :Limelight!!<CR>
 xmap <leader>l :Limelight!!<CR>
@@ -304,8 +291,6 @@ nmap <silent> <leader><leader> :noh<CR>
 
 autocmd FileType apache setlocal commentstring=#\ %s
 
-let g:gitgutter_max_signs = 500
-
 
 """ Custom Mappings
 let mapleader=" "
@@ -314,11 +299,7 @@ nmap <leader>w :TagbarToggle<CR>
 nmap \| <leader>w
 nmap <leader>ee :Colors<CR>
 nmap <leader>ea :AirlineTheme
-nmap <leader>r :so ~/.config/nvim/init.vim<CR>
 nmap <leader>t :call TrimWhitespace()<CR>
-nmap <leader>p <Plug>(pydocstring)
-xmap <leader>a gaip*
-nmap <leader>a gaip*
 nmap <leader>s :Rg<CR>
 nmap <C-p>  <cmd>lua require('telescope.builtin').find_files()<CR>
 nnoremap <leader>h :h <C-R>=expand("<cword>")<CR><CR>
@@ -377,8 +358,6 @@ vnoremap > >gv
 vnoremap < <gv
 
 
-" git worktree
-nnoremap <leader>gw <cmd> :lua require('telescope').extensions.git_worktree.git_worktrees() <CR>
 
 
 nmap <C-_>   <Plug>NERDCommenterToggle
@@ -397,11 +376,11 @@ nmap <leader>nn :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '>
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 com! W w
+cnoreabbrev W! w!
 
 
 nnoremap <leader>ga :lua require('telescope').extensions.git_worktree.create_git_worktree() <CR>
 nnoremap <leader>u :UndotreeShow<CR>
-map <leader>g :G <CR>
 " wipe out the registers
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 autocmd VimEnter * WipeReg
@@ -421,7 +400,7 @@ set foldmethod=indent
 setlocal foldignore=
 noremap <leader><leader> za
 noremap <leader>ff zf
-au Filetype htmldjango nmap <leader>ff zfit 
+au Filetype htmldjango nmap <leader>ff zfit
 
 autocmd BufWinLeave *.* :mkview
 autocmd BufWinEnter *.* silent! :loadview
@@ -430,54 +409,9 @@ autocmd BufWinEnter *.* silent! :loadview
 
 nnoremap <silent><leader>n   :noh <CR>
 :call ColorGruv()
-let g:airline_mode_map = {
-  \ '__'     : '-',
-  \ 'c'      : 'C',
-  \ 'i'      : 'I',
-  \ 'ic'     : 'I',
-  \ 'ix'     : 'I',
-  \ 'n'      : 'N',
-  \ 'multi'  : 'M',
-  \ 'ni'     : 'N',
-  \ 'no'     : 'N',
-  \ 'R'      : 'R',
-  \ 'Rv'     : 'R',
-  \ 's'      : 'S',
-  \ 'S'      : 'S',
-  \ ''     : 'S',
-  \ 't'      : 'T',
-  \ 'v'      : 'V',
-  \ 'V'      : 'V',
-  \ ''     : 'V',
-  \ }
-
-
-let g:airline_filetype_overrides = {
-  \ 'coc-explorer':  [ 'CoC Explorer', '' ],
-  \ 'defx':  ['defx', '%{b:defx.paths[0]}'],
-  \ 'fugitive': ['fugitive', '%{airline#util#wrap(airline#extensions#branch#get_head(),80)}'],
-  \ 'floggraph':  [ 'Flog', '%{get(b:, "flog_status_summary", "")}' ],
-  \ 'gundo': [ 'Gundo', '' ],
-  \ 'help':  [ 'Help', '%f' ],
-  \ 'minibufexpl': [ 'MiniBufExplorer', '' ],
-  \ 'nerdtree': [ get(g:, 'NERDTreeStatusline', 'NERD'), '' ],
-  \ 'startify': [ 'startify', '' ],
-  \ 'vim-plug': [ 'Plugins', '' ],
-  \ 'vimfiler': [ 'vimfiler', '%{vimfiler#get_status_string()}' ],
-  \ 'vimshell': ['vimshell','%{vimshell#get_status_string()}'],
-  \ 'vaffle' : [ 'Vaffle', '%{b:vaffle.dir}' ],
-  \ }
-
-
-  if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-  endif
-
-
-" run selected python code in terminal
-vmap <leader><CR> :'<,'>w !python3  <CR>
 
 "snippets setting
+"{{{
 imap <C-l> <Plug>(coc-snippets-expand)
 vmap <C-j> <Plug>(coc-snippets-select)
 let g:coc_snippet_next = '<c-j>'
@@ -495,5 +429,7 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+"}}}
 let g:coc_snippet_next = '<tab>'
-
+nnoremap <C-q> :call ToggleQFList(1)<CR>
+nnoremap <leader>m :MaximizerToggle!<CR>

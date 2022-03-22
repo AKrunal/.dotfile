@@ -29,14 +29,32 @@
 
 snippet main "__main__" b
 ${0}
-
 def main():
 	${1:pass}
-
 
 if __name__ == "__main__":
 	main()
 
+endsnippet
+
+snippet imp "import statements" b
+import ${0:module}
+endsnippet
+
+snippet from "import statements" b
+from ${1:package} import ${0:module}
+endsnippet
+
+snippet afrom "import statements" b
+from ${1:package} import ${2:module} as ${0:alias}
+endsnippet
+
+snippet start "starter of documentation" b
+"""
+Author : `echo $USER`
+Date : `!v strftime('%c')`
+Description: ${0}
+"""
 endsnippet
 
 *******************************
@@ -57,4 +75,31 @@ else:
 	${3:pass}
 
 ${0}
+endsnippet
+
+snippet for	"for loop" b
+for ${1:item} in ${2:items}:
+	${0:pass}
+endsnippet
+
+*******************************
+*           classes           *
+*******************************
+
+snippet cl "Class with init and str " b
+class ${1:cl}:
+	""" ${2:doc string for} """
+	
+	def __init__(self,${3}):
+		${4:pass}
+	
+	def __str__(self):
+		return self.${0:class}
+endsnippet
+
+snippet cls "Class with only init" b
+class ${1:class}:
+	
+	def __init__(self,${2:args}):
+		${0:pass}
 endsnippet
