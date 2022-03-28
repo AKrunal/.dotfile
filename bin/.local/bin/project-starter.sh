@@ -20,8 +20,8 @@ fi
 dict=`find ~/.dotfile/nvim/.config/nvim/local-conf -type d -name "$selected"`
 if [  -d "$dict" ]; then
     git init 
-    cp -v "$dict/init.vim" "`pwd`"
-    cp -v "$dict/.gitignore" "`pwd`"
-    echo 'let g:project_name="$project_name"' >> 'init.vim'
+    cp  "$dict/init.vim" "`pwd`"
+    cp  "$dict/.gitignore" "`pwd`"
+    echo 'let g:project_name="'${project_name}'"' >> 'init.vim'
 fi
 

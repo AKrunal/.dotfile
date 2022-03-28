@@ -128,3 +128,6 @@ bindkey '5~' kill-word
 
 alias runser="tmux neww -n 'runserver' 'python3 manage.py runserver' "
 export PATH=$PATH:~/.local/bin/go/bin
+
+# projects aliases
+alias extra="cd /mnt/e/electron/meteor && tmux"
